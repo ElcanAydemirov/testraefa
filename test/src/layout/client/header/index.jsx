@@ -1,17 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { NavLink } from 'react-router-dom';
 import { Container, Row, Col } from 'react-bootstrap';
 import styles from './index.module.scss';
+import { wishlistContext } from '../../../context/wishlist';
 
 const ClientHeader = () => {
-  const [wishlistCount, setWishlistCount] = useState(0);
+  const {wishlist} = useContext(wishlistContext)
 
-  useEffect(() => {
-    
-    const savedFavorites = localStorage.getItem('favorites');
-    const heartProducts = savedFavorites ? JSON.parse(savedFavorites) : [];
-    setWishlistCount(heartProducts.length);
-  }, []); 
 
   return (
     <>
@@ -37,7 +32,8 @@ const ClientHeader = () => {
           </li>
           <li>
             <NavLink to={'/wishlist'}>
-              WishList {wishlistCount > 0 && <span>({wishlistCount})</span>}
+              Wishlist
+              <sup>{wishlist.length}</sup>
             </NavLink>
           </li>
         </ul>

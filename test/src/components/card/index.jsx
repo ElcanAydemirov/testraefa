@@ -5,38 +5,23 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import { Col, Container, Row } from 'react-bootstrap';
-import { FaInfo } from "react-icons/fa6";
+import { FaInfo, FaHeart } from "react-icons/fa";
+import { CiHeart } from "react-icons/ci";
 import { useNavigate } from 'react-router-dom';
-import { FaHeart, FaHeartBroken } from "react-icons/fa";
+import { wishlistContext } from '../../context/wishlist';
 
-const ProductCard = ({ title, image, description, price, id, product }) => {
-    const [heartProduct, setHeartProduct] = React.useState([]); 
+const ProductCard = ({ title, image, description, price, id }) => {
+    const { wishlist, setWishlist } = React.useContext(wishlistContext);
     const nav = useNavigate();
 
-    // LocalStorage-dən favorites məlumatını almaq
-    React.useEffect(() => {
-        const savedFavorites = localStorage.getItem('favorites');
-        const heartProducts = savedFavorites ? JSON.parse(savedFavorites) : [];
-        setHeartProduct(heartProducts);
-    }, []);
-
-    // Favorites-a məhsul əlavə etmək və ya silmək
-    const handleFavorites = () => {
-        const isAlreadyAdded = heartProduct.some((item) => item.id === product.id);
-
-        if (isAlreadyAdded) {
-            const updatedHeartProduct = heartProduct.filter((item) => item.id !== product.id);
-            setHeartProduct(updatedHeartProduct);
-            localStorage.setItem('favorites', JSON.stringify(updatedHeartProduct)); 
+    const handleWishlist = () => {
+        if (wishlist.includes(id)) {
+            const updatedWishlist = wishlist.filter((w) => w !== id);
+            setWishlist(updatedWishlist);
         } else {
-            const updatedHeartProduct = [...heartProduct, product];
-            setHeartProduct(updatedHeartProduct);
-            localStorage.setItem('favorites', JSON.stringify(updatedHeartProduct));
+            setWishlist([...wishlist, id]);
         }
     };
-
-    // Məhsulun favorit olub-olmaması
-    const isFavorite = heartProduct.some((item) => item.id === product.id);
 
     return (
         <Container>
@@ -45,7 +30,7 @@ const ProductCard = ({ title, image, description, price, id, product }) => {
                     <Card sx={{ maxWidth: 345 }}>
                         <CardMedia
                             sx={{ height: 140 }}
-                            image={image || 'default-image-url'}  // image yoxdursa default şəkil əlavə edin
+                            image={image}
                             title={title}
                         />
                         <CardContent>
@@ -57,16 +42,16 @@ const ProductCard = ({ title, image, description, price, id, product }) => {
                             </Typography>
                         </CardContent>
                         <CardActions>
-                            <FaInfo onClick={() => nav(`/products/${id}`)} /> {/* Məhsulun səhifəsinə yönləndirmək */}
-                            {isFavorite ? (
+                            <FaInfo onClick={() => nav(`/products/${id}`)} />
+                            {wishlist.includes(id) ? (
                                 <FaHeart
-                                    style={{ fontSize: "1.5rem", color: "red" }} 
-                                    onClick={handleFavorites}
+                                    style={{ fontSize: "1.5rem", color: "red" }}
+                                    onClick={handleWishlist}
                                 />
                             ) : (
-                                <FaHeartBroken
-                                    style={{ fontSize: "1.5rem", color: "grey" }} 
-                                    onClick={handleFavorites}
+                                <CiHeart
+                                    style={{ fontSize: "1.5rem", color: "gray" }}
+                                    onClick={handleWishlist}
                                 />
                             )}
                         </CardActions>

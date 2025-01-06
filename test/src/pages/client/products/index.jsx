@@ -1,13 +1,15 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 
 import axios from 'axios'
 import ProductCard from '../../../components/card';
 import { Col, Container, Row } from 'react-bootstrap';
 import SearchInput from '../../../components/searchinput';
+import { wishlistContext } from '../../../context/wishlist';
+import { productContext } from '../../../context/products';
 
 const ClientProducts = () => {
     const BASE_URL = 'http://localhost:3000/';
-    const [products, setProducts] = useState([])
+    const {products, setProducts} = useContext(productContext)
 
     const [searchValue, setSearchVlue] = useState("")
     const getAllProducts = async () => {
@@ -27,6 +29,10 @@ const ClientProducts = () => {
       getAllProducts()
 
     }, [])
+
+
+    const {wishlist,setWishlist} = useContext(wishlistContext)
+    console.log(wishlist);
     
   return (
     <>

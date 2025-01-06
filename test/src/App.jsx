@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useContext, useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
@@ -13,10 +13,12 @@ import ClientLayout from './pages/client'
 import ClientProducts from './pages/client/products'
 import ProductDetails from './pages/client/productdetails'
 import WishList from './pages/client/wishlist'
+import { wishlistContext } from './context/wishlist'
 
 function App() {
   const [count, setCount] = useState(0)
-
+  const {wishlist,setWishlist} = useContext(wishlistContext)
+  
   return (
     <>
 
