@@ -3,9 +3,11 @@ import { NavLink } from 'react-router-dom';
 import { Container, Row, Col } from 'react-bootstrap';
 import styles from './index.module.scss';
 import { wishlistContext } from '../../../context/wishlist';
+import { basketContext } from '../../../context/basket';
 
 const ClientHeader = () => {
   const {wishlist} = useContext(wishlistContext)
+  const {basket} = useContext(basketContext)
 
 
   return (
@@ -34,6 +36,12 @@ const ClientHeader = () => {
             <NavLink to={'/wishlist'}>
               Wishlist
               <sup>{wishlist.length}</sup>
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to={'/basket'}>
+              Wishlist
+              <sup>{basket.length}</sup>
             </NavLink>
           </li>
         </ul>

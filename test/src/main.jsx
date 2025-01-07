@@ -7,15 +7,17 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Wishlist from './context/wishlist'
 import Products from './context/products'
 import ProductsProvider from './context/products'
+import BasketProvider from './context/basket'
 
 createRoot(document.getElementById('root')).render(
-  <ProductsProvider>
+  <BasketProvider>
+      <ProductsProvider>
       <Wishlist>
-      <BrowserRouter>
-    <App />
-  </BrowserRouter>,
-  </Wishlist>
-
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
+      </Wishlist>
   </ProductsProvider>
+  </BasketProvider>
 
 )
