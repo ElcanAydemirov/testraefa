@@ -15,6 +15,7 @@ import ProductDetails from './pages/client/productdetails'
 import WishList from './pages/client/wishlist'
 import { wishlistContext } from './context/wishlist'
 import BasketPage from './pages/client/basket'
+import Home from './pages/client/home'
 
 function App() {
   const [count, setCount] = useState(0)
@@ -25,6 +26,7 @@ function App() {
 
     <Routes>
       <Route path='/' element={<ClientLayout/>}>
+        <Route index element={<Home/>}/>
         <Route path='/about' element={<About/>}/>
         <Route path='/contact' element={<Contact/>}/>
         <Route path='/products' element={<ClientProducts/>}/>

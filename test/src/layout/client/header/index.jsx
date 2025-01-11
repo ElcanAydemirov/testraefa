@@ -4,14 +4,24 @@ import { Container, Row, Col } from 'react-bootstrap';
 import styles from './index.module.scss';
 import { wishlistContext } from '../../../context/wishlist';
 import { basketContext } from '../../../context/basket';
+import MenuIcon from '@mui/icons-material/Menu';
 
 const ClientHeader = () => {
   const {wishlist} = useContext(wishlistContext)
   const {basket} = useContext(basketContext)
+  console.log(basket);
+  
+  let count = 0;
+  basket && basket.map((b) => {
+    count+= b.quantity
+  })
+  console.log(count);
+  
 
-
+  
   return (
     <>
+
       <section 
         id={styles.header} 
         style={{backgroundColor:"aqua", padding:"1.5rem 2rem", display:"flex", justifyContent:"space-between"}}
@@ -19,7 +29,8 @@ const ClientHeader = () => {
         <div className="logo" style={{fontSize:"2rem"}}>
           React App 
         </div>
-        <ul style={{display:'flex', gap:'2rem', listStyle:'none', textDecoration:"none"}}>
+        <MenuIcon className={styles.menu}/>
+        <ul style={{display:'flex', gap:'2rem', listStyle:'none', textDecoration:"none"} } className={styles.navul}>
           <li>
             <NavLink to={'/'} style={{textDecoration:"none"}}>Home</NavLink>
           </li>
@@ -40,8 +51,8 @@ const ClientHeader = () => {
           </li>
           <li>
             <NavLink to={'/basket'}>
-              Wishlist
-              <sup>{basket.length}</sup>
+              Basket
+              <sup>{count}</sup>
             </NavLink>
           </li>
         </ul>
